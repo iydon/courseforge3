@@ -1,9 +1,12 @@
 UV := uv
 
 
-.PHONY: format
+.PHONY: format sync
 
 
 format:
 	$(UV) format
 	$(UV) tool run ty check
+
+sync:
+	$(UV) sync --all-groups

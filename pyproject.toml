@@ -1,9 +1,16 @@
 [project]
-name = "llm"
+name = "courseforge"
 version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.12"
-dependencies = ["openai>=2.38.0", "pyyaml>=6.0.3", "tqdm>=4.67.3"]
+dependencies = ["pyyaml>=6.0.3", "tqdm>=4.67.3"]
 
 [dependency-groups]
+case = [
+    "openai>=2.38.0",
+    "pandas>=3.0.3",
+    "pyarrow>=24.0.0",
+    "python-dotenv>=1.2.2",
+    "sentence-transformers>=5.5.1",
+]
 dev = ["ipython>=9.14.0"]

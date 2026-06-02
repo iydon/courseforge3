@@ -24,11 +24,12 @@ class OpenCode:
         self._model = model
         self._pure = pure
         self._session: Maybe[str] = None
-        self._args = ["--format", "json", "--dangerously-skip-permissions"]
+        self._args = ["--dir", self._cwd, "--format", "json"]
         if self._model is not None:
             self._args += ["--model", self._model]
         if self._pure:
             self._args.append("--pure")
+        self._args.append("--dangerously-skip-permissions")
 
     @classmethod
     def fromDeepSeek(
