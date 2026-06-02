@@ -113,8 +113,11 @@ class Result:
 
     @property
     def usage(self) -> list[dict]:
-        self.consume()
         return self._usage
+
+    @property
+    def tokens(self) -> int:
+        return sum(part.get("total", 0) for part in self._usage)
 
     def consume(self) -> t.Self:
         if self._stdout is None:
