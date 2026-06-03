@@ -1,12 +1,17 @@
+import itertools as it
+import pathlib as p
+
 import tqdm
 
 from courseforge.base import Course
 from courseforge.util.astral_uv import AstralUv
+from courseforge.util.latex import LaTeX
 from courseforge.util.opencode import OpenCode
 from courseforge.util.other import mkdir
 from courseforge.util.statistics import Statistics
 
 
+root = p.Path(__file__).parent
 course = Course.fromYaml("static/outline.yaml")
 stat = Statistics.fromDirectory("build")
 uv = AstralUv.fromDefault()
@@ -29,6 +34,29 @@ for cwd, info in tqdm.tqdm(list(course.iter_lessons(stat.directory))):
     paths = [dir_02 / f"{ith + 1}.py" for ith in range(3)]
     if not all(path.exists() for path in paths):
         oc.run_template("static/prompt/02-case.md").consume()
+        uv.format(dir_02)
     assert all(path.exists() for path in paths)
-    uv.runs(dir_02, format=False)
+    uv.runs(dir_02)
+    # 0x03 教学课件
+    dir_03 = mkdir(cwd / "slides")
+    path = dir_03 / "main.pdf"
+    if not path.exists():
+        latex = LaTeX.fromDirectory(dir_03)
+        level = len(dir_03.relative_to(root).parts)
+        iroot = p.Path(*it.repeat("..", level), "static")
+        _, title, *parts = cwd.name.split(Course.sep)
+        (
+            latex.copy("static/slides/.latexmkrc")
+            .copy("static/slides/section.tex")
+            .copy_template(
+                "static/slides/main.tex",
+                iroot=iroot,
+                title=title,
+                part="/".join(parts),
+            )
+        )
+        page = 60 * info["duration"] / 2  # 2 min/page
+        oc.run_template("static/prompt/03-slides.md", page=page).consume()
+        latex.make()
+    assert path.exists()
 print(stat.summary())

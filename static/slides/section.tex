@@ -1,0 +1,271 @@
+\section{排版基础}
+
+\subsection{字体与强调}
+\begin{frame}{字体样式与颜色强调}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\color{main} 字体系列}
+            \begin{itemize}
+                \item 默认字体: The quick brown fox jumps over the lazy dog.
+                \item \textbf{粗体 (Bold)}: \textbf{The quick brown fox}
+                \item \textit{斜体 (Italic)}: \textit{The quick brown fox}
+                \item \texttt{等宽 (Monospace)}: \texttt{print("Hello World")}
+                \item \textsc{小型大写 (Small Caps)}: \textsc{Beamer}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \textbf{\color{main} 颜色与强调}
+            \begin{itemize}
+                \item 使用 \structure{structure} 命令强调结构。
+                \item 使用 \alert{alert} 命令表示警示。
+                \item 自定义颜色: \textcolor{main}{Main Color}, \textcolor{blue}{Blue}, \textcolor{red}{Red}.
+                \item \colorbox{yellow}{背景高亮} 也是一种选择。
+            \end{itemize}
+            \vspace{1em}
+            \begin{quote}
+                ``排版不仅仅是关于外观，更是关于信息的有效传递。''
+            \end{quote}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{列表环境}
+\begin{frame}{多样的列表环境}
+    \begin{columns}[T]
+        \begin{column}{0.33\textwidth}
+            \textbf{\color{main} 无序列表 (Itemize)}
+            \begin{itemize}
+                \item 第一点
+                \item 第二点
+                \begin{itemize}
+                    \item 子项 A
+                    \item 子项 B
+                \end{itemize}
+                \item 第三点
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \textbf{\color{main} 有序列表 (Enumerate)}
+            \begin{enumerate}
+                \item 步骤一：准备数据
+                \item 步骤二：清洗数据
+                \item 步骤三：模型训练
+                \item 步骤四：结果评估
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \textbf{\color{main} 描述列表 (Description)}
+            \begin{description}
+                \item[API] 应用程序接口
+                \item[SDK] 软件开发工具包
+                \item[IDE] 集成开发环境
+                \item[CLI] 命令行界面
+            \end{description}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\section{结构化内容}
+
+\subsection{区块样式}
+\begin{frame}{Beamer 区块样式展示}
+    \begin{block}{标准区块 (Block)}
+        这是一个标准的区块，通常用于承载一般性的信息、定义或说明。
+        背景色较浅，标题使用主色调。
+    \end{block}
+
+    \begin{alertblock}{警告区块 (Alert Block)}
+        这是一个警告区块，用于强调重要的注意事项、风险或错误提示。
+        标题通常使用醒目的颜色（如红色或主色的变体）。
+    \end{alertblock}
+
+    \begin{exampleblock}{示例区块 (Example Block)}
+        这是一个示例区块，用于展示案例、代码片段或具体应用场景。
+        \begin{itemize}
+            \item 案例 1：用户登录流程
+            \item 案例 2：数据加密传输
+        \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+\subsection{数学公式}
+\begin{frame}{数学公式排版 (基于 physics 包)}
+    \begin{columns}[c]
+        \begin{column}{0.5\textwidth}
+            \textbf{微积分与导数}
+            \begin{itemize}
+                \item 普通导数: $\dv{f}{x}$
+                \item 偏导数: $\pdv{f}{x,y}$
+                \item 高阶导数: $\dv[2]{y}{x}$
+            \end{itemize}
+            \vspace{1em}
+            \textbf{矩阵与向量}
+            \[
+            \mathbf{A} = \mqty(
+                a_{11} & a_{12} \\
+                a_{21} & a_{22}
+            ), \quad
+            \ket{\psi} = \alpha \ket{0} + \beta \ket{1}
+            \]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{复杂公式示例}
+            \begin{equation}
+                \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
+            \end{equation}
+            \begin{equation}
+                \begin{aligned}
+                    \mathcal{L}(\theta) &= \mathbb{E}_{x \sim p_{data}} [-\log p_{model}(x)] \\
+                                        &\approx \frac{1}{N} \sum_{i=1}^N -\log p_{model}(x^{(i)})
+                \end{aligned}
+            \end{equation}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\section{编程与数据}
+
+\subsection{代码高亮}
+\begin{frame}[fragile]{代码高亮}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{\color{main} Python 数据分析}
+            \begin{iCodeEnv}{}{python}
+import numpy as np
+import pandas as pd
+
+def calculate_metrics(data):
+    """计算核心指标"""
+    mean_val = np.mean(data)
+    std_val = np.std(data)
+    return {
+        'mean': mean_val,
+        'std': std_val,
+        'z_score': (data - mean_val) / std_val
+    }
+
+# 加载数据
+df = pd.read_csv('sales_data.csv')
+metrics = calculate_metrics(df['amount'])
+            \end{iCodeEnv}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \textbf{\color{main} 系统运维脚本}
+            \begin{iCodeEnv}{}{bash}
+#!/bin/bash
+
+# 检查环境变量
+if [ -z "$ENV" ]; then
+    echo "Error: ENV not set"
+    exit 1
+fi
+
+echo "Deploying to $ENV..."
+docker-compose up -d --build
+echo "Deployment successful!"
+            \end{iCodeEnv}
+            \vspace{0.5em}
+            \small
+            使用 \iCodeCmd{print("Hello")} 或 \iCodeCmd[bash]{ls -la} 或 \iCodeCmd[sql]{SELECT * FROM users} 在行内插入代码。
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{表格展示}
+\begin{frame}{学术风格表格 (Booktabs)}
+    \begin{table}
+        \caption{不同模型在 ImageNet 上的性能对比}
+        \centering
+        \begin{tabularx}{\textwidth}{Xcccc}
+            \toprule
+            \textbf{模型架构} & \textbf{年份} & \textbf{参数量 (M)} & \textbf{Top-1 Acc (\%)} & \textbf{Top-5 Acc (\%)} \\
+            \midrule
+            AlexNet         & 2012 & 61    & 63.3 & 84.6 \\
+            VGG-16          & 2014 & 138   & 71.3 & 90.1 \\
+            ResNet-50       & 2015 & 25    & 76.0 & 93.0 \\
+            Inception-v3    & 2015 & 24    & 77.5 & 93.5 \\
+            EfficientNet-B7 & 2019 & 66    & 84.3 & 97.1 \\
+            \bottomrule
+        \end{tabularx}
+    \end{table}
+    \vspace{0.5em}
+    \begin{itemize}
+        \item 使用 \texttt{booktabs} 宏包提供的 \texttt{toprule}, \texttt{midrule}, \texttt{bottomrule} 绘制三线表。
+        \item 表格标题通常置于表格上方。
+    \end{itemize}
+\end{frame}
+
+
+\section{可视化}
+
+\subsection{TikZ 绘图}
+\begin{frame}{TikZ 流程图示例}
+    \centering
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        node distance=0.5cm and 1.5cm,
+        box/.style={rectangle, draw=main, fill=main!5, thick, minimum width=2.5cm, minimum height=1cm, rounded corners, align=center},
+        decision/.style={diamond, draw=alert, fill=alert!5, thick, aspect=2, minimum width=2.5cm, align=center, font=\footnotesize},
+        line/.style={-Stealth, thick, draw=black!70}
+    ]
+        % Nodes
+        \node[box] (start) {开始};
+        \node[box, below=of start] (step1) {数据预处理};
+        \node[decision, below=of step1] (check) {数据完整?};
+        \node[box, right=of check] (fix) {修复数据};
+        \node[box, below=of check, yshift=-0.5cm] (analyze) {进行分析};
+        \node[box, below=of analyze] (end) {生成报告};
+
+        % Edges
+        \draw[line] (start) -- (step1);
+        \draw[line] (step1) -- (check);
+        \draw[line] (check) -- node[right, font=\tiny] {No} (fix);
+        \draw[line] (fix) |- (step1);
+        \draw[line] (check) -- node[right, font=\tiny] {Yes} (analyze);
+        \draw[line] (analyze) -- (end);
+    \end{tikzpicture}
+\end{frame}
+
+\subsection{图文混排}
+\begin{frame}{图文混排布局}
+    \begin{columns}[c]
+        \begin{column}{0.6\textwidth}
+            \textbf{神经网络结构示意}
+
+            左侧展示了一个简单的前馈神经网络结构图。
+            \begin{itemize}
+                \item \textbf{输入层}: 接收原始特征向量。
+                \item \textbf{隐藏层}: 进行非线性变换。
+                \item \textbf{输出层}: 产生最终预测结果。
+            \end{itemize}
+
+            \vspace{1em}
+            在 Beamer 中，我们可以灵活地控制 \texttt{columns} 的宽度和对齐方式（T=顶部对齐, c=垂直居中, b=底部对齐）。
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \begin{tikzpicture}[scale=0.6, transform shape]
+                \foreach \i in {1,...,3}
+                    \node[circle, draw=main, fill=white, thick] (I-\i) at (0,-\i) {$x_\i$};
+
+                \foreach \j in {1,...,4}
+                    \node[circle, draw=main, fill=main!20, thick] (H-\j) at (2.5,-\j+0.5) {$h_\j$};
+
+                \foreach \k in {1,...,2}
+                    \node[circle, draw=alert, fill=alert!20, thick] (O-\k) at (5,-\k-0.5) {$y_\k$};
+
+                \foreach \i in {1,...,3}
+                    \foreach \j in {1,...,4}
+                        \draw[gray!50] (I-\i) -- (H-\j);
+
+                \foreach \j in {1,...,4}
+                    \foreach \k in {1,...,2}
+                        \draw[gray!50] (H-\j) -- (O-\k);
+            \end{tikzpicture}
+            \vspace{0.5em}
+            \captionof{figure}{简单的神经网络}
+        \end{column}
+    \end{columns}
+\end{frame}

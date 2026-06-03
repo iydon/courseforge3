@@ -1,0 +1,170 @@
+\usetheme{Boadilla}
+    \definecolor{main}{HTML}{3F67B8}
+    % font
+    \setbeamerfont{title}{size=\LARGE, series=\bfseries}
+    \setbeamerfont{part title}{size=\Large}
+    % color
+    \setbeamercolor{alertblock title}{bg=main!15, fg=main}
+    \setbeamercolor{block title}{bg=main!10, fg=main}
+    \setbeamercolor{frametitle}{fg=main}
+    \setbeamercolor{structure}{fg=main}
+    \setbeamercolor{section number projected}{bg=main, fg=white}
+    \setbeamercolor{subsection number projected}{bg=main!50, fg=white}
+    \setbeamercolor{section number projected}{bg=main, fg=white}
+    \setbeamercolor{subsection number projected}{bg=main!50, fg=white}
+    % template
+    \setbeamertemplate{sections/subsections in toc}[square]
+    \setbeamertemplate{navigation symbols}{}
+
+\AtBeginSection[]{
+    \begin{frame}[noframenumbering, plain]
+        \centering
+        \vfill
+        {
+            \usebeamerfont{section title}
+            \LARGE
+            \insertsectionnumber.\ \insertsection
+            \par
+        }
+        \vfill
+        \begin{tikzpicture}[overlay, remember picture]
+            \pgfmathsetlengthmacro{\bary}{4cm}
+            \pgfmathsetlengthmacro{\barxstart}{0.10\paperwidth}
+            \pgfmathsetlengthmacro{\barxend}{0.90\paperwidth}
+            \pgfmathsetlengthmacro{\barheight}{0.08cm}
+            \pgfmathsetlengthmacro{\barwidth}{\barxend-\barxstart}
+            \pgfmathsetmacro{\totalframes}{max(\inserttotalframenumber, 1)}
+            \pgfmathsetmacro{\ratio}{min((\value{framenumber})/\totalframes, 1)}
+            \pgfmathsetlengthmacro{\progress}{\ratio*\barwidth}
+            \fill[gray!20, rounded corners=1.2pt]
+                ($(current page.south west)+(\barxstart, \bary)$) rectangle
+                ($(current page.south west)+(\barxend, \bary+\barheight)$);
+            \fill[main, rounded corners=1.2pt]
+                ($(current page.south west)+(\barxstart, \bary)$) rectangle
+                ($(current page.south west)+(\barxstart+\progress, \bary+\barheight)$);
+        \end{tikzpicture}
+    \end{frame}
+}
+
+\apptocmd{\partpage}{
+    \begin{multicols}{2}
+        \begin{spacing}{1.2}
+            \tableofcontents[part=\value{part}]
+        \end{spacing}
+    \end{multicols}
+}{}{}
+
+\usepackage[BoldFont, SlantFont]{xeCJK}
+    % English
+    \defaultfontfeatures[FiraCode]{
+        Path          = \iroot/font/FiraCode/,
+        Extension     = .ttf,
+        UprightFont   = FiraCode-Regular,
+        BoldFont      = FiraCode-Bold,
+        AutoFakeSlant = 0.2,
+        Contextuals   = Alternate
+    }
+    \setmainfont{FiraCode}
+    \setsansfont{FiraCode}
+    \setmonofont{FiraCode}
+    % Chinese
+    \defaultfontfeatures[AlibabaPuHuiTi-3]{
+        Path          = \iroot/font/AlibabaPuHuiTi-3/,
+        Extension     = .otf,
+        UprightFont   = Regular,
+        BoldFont      = Bold,
+        AutoFakeSlant = 0.2
+    }
+    \setCJKmainfont{AlibabaPuHuiTi-3}
+    \setCJKsansfont{AlibabaPuHuiTi-3}
+    \setCJKmonofont{AlibabaPuHuiTi-3}
+\usepackage{amsmath, esint, physics, unicode-math}
+    \unimathsetup{math-style=ISO, bold-style=ISO, mathrm=sym}
+    \setmathfont{FiraMath-Regular.otf}[
+        Path = \iroot/font/FiraMath/,
+    ]
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+    \hypersetup{
+        pdfauthor={iydon},
+        pdfcreator={null},
+        pdfproducer={null},
+        colorlinks = true,
+        linkcolor  = main!50!black,  % Aquamarine!50!black
+        urlcolor   = YellowOrange!85!black,
+        citecolor  = violet!85!black,
+    }
+\usepackage{caption, graphicx, tikz}
+    \usetikzlibrary{arrows.meta, calc, positioning, shapes}
+    \addtobeamertemplate{headline}{}{
+        \ifnum\insertframenumber>1
+            \begin{tikzpicture}[remember picture, overlay]
+                \node[anchor=north east, xshift=-0.3cm, yshift=-0.2cm] at (current page.north east) {
+                    \includegraphics[height=0.55cm]{\iroot/image/logo.png}
+                };
+            \end{tikzpicture}
+        \fi
+    }
+    \addtobeamertemplate{frametitle}{}{
+        \begin{tikzpicture}[remember picture, overlay]
+            \draw[line width=0.2cm, main!30]
+            ([xshift=+0.3cm, yshift=-1.1cm]current page.north west) --
+            ([xshift=-0.3cm, yshift=-1.1cm]current page.north east);
+        \end{tikzpicture}
+    }
+\usepackage[breakable, minted, skins]{tcolorbox}
+    \tcbset{
+        iCodeStyle/.style={
+            breakable,
+            enhanced,
+            drop shadow,
+            listing only,
+            listing engine=minted,
+            minted options={
+                linenos,
+                breaklines,
+                autogobble,
+                fontsize=\tiny,
+                numbersep=3pt,
+            },
+            colframe=main,
+            colback=white,
+            left=5mm,
+        }
+    }
+    \NewTCBListing{iCodeEnv}{ O{} m m }{
+        iCodeStyle,
+        minted language=#3,
+        title={#2},
+        #1
+    }
+    \NewTotalTCBox{\iCodeCmd}{ O{python} m }{
+        breakable,
+        tcbox raise base,
+        nobeforeafter,
+        arc=2pt,
+        colback=gray!5!white,
+        colframe=white,
+        left=0pt,
+        right=0pt,
+        top=1pt,
+        bottom=1pt,
+        boxsep=0pt,
+        fontupper=\ttfamily,
+    }{\mintinline{#1}{#2}}
+    % patch
+    \NewTCBListing{ipyenv}{ O{} m }
+        {iCodeStyle, minted language=python, title={#2}, #1}
+    \NewTCBListing{ishenv}{ O{} m }
+        {iCodeStyle, minted language=bash, title={#2}, #1}
+    \NewTCBListing{isqlenv}{ O{} m }
+        {iCodeStyle, minted language=sql, title={#2}, #1}
+    \NewDocumentCommand{\ipycmd}{ v }{\iCodeCmd[python]{#1}}
+    \NewDocumentCommand{\ishcmd}{ v }{\iCodeCmd[bash]{#1}}
+    \NewDocumentCommand{\isqlcmd}{ v }{\iCodeCmd[sql]{#1}}
+
+\usepackage{booktabs}
+\usepackage{etoolbox}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{tabularx}
