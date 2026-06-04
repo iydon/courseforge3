@@ -162,6 +162,14 @@
     \NewDocumentCommand{\ipycmd}{ v }{\iCodeCmd[python]{#1}}
     \NewDocumentCommand{\ishcmd}{ v }{\iCodeCmd[bash]{#1}}
     \NewDocumentCommand{\isqlcmd}{ v }{\iCodeCmd[sql]{#1}}
+\usepackage{csquotes}
+    \DeclareQuoteStyle{chinese}
+        {\symbol{"201C}}  % 左双引号
+        {\symbol{"201D}}  % 右双引号
+        {\symbol{"2018}}  % 左单引号
+        {\symbol{"2019}}  % 右单引号
+    \setquotestyle{chinese}
+    \MakeOuterQuote{"}
 
 \usepackage{booktabs}
 \usepackage{etoolbox}

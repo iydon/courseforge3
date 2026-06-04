@@ -23,6 +23,7 @@ client = OpenAI(
     base_url="https://api.deepseek.com",
 )
 ```
+- 模型选择：常规任务默认使用 `deepseek-v4-flash`，复杂推理任务使用 `deepseek-v4-pro`，需在代码中显式指定 model 参数
 - 每个案例需独立运行，覆盖课时内容中的关键知识点
 - 禁止使用 `input()` 或任何交互式输入，所有数据直接在代码中硬编码，确保 `uv run` 一键跑通
 - 添加必要的注释和错误处理

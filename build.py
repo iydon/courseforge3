@@ -59,4 +59,6 @@ for cwd, info in tqdm.tqdm(list(course.iter_lessons(stat.directory))):
         oc.run_template("static/prompt/03-slides.md", page=page).consume()
         latex.make()
     assert path.exists()
+    # 0x04 逐字稿
+    path_04 = cwd / "verbatim.txt"
 print(stat.summary())
