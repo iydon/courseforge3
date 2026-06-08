@@ -13,7 +13,13 @@
 
 - 案例文件：`case/1.py`、`case/2.py`、`case/3.py`
 - 案例中如需本地持久化（缓存文件、中间结果、输出数据等），统一写入 `case/.cache/` 目录
-- 使用 OpenAI 兼容接口，连接方式如下（环境变量由用户自行设置）：
+- 每个案例需独立运行，覆盖课时内容中的关键知识点
+- 禁止使用 `input()` 或任何交互式输入，所有数据直接在代码中硬编码
+- 添加必要的注释和错误处理
+
+### 涉及大模型调用时
+
+- 使用 OpenAI 兼容接口连接 DeepSeek，连接方式如下（环境变量由用户自行设置）：
 ```python
 import os
 from openai import OpenAI
@@ -24,6 +30,14 @@ client = OpenAI(
 )
 ```
 - 模型选择：常规任务默认使用 `deepseek-v4-flash`，复杂推理任务使用 `deepseek-v4-pro`，需在代码中显式指定 model 参数
-- 每个案例需独立运行，覆盖课时内容中的关键知识点
-- 禁止使用 `input()` 或任何交互式输入，所有数据直接在代码中硬编码，确保 `uv run` 一键跑通
-- 添加必要的注释和错误处理
+
+### 涉及数据存储/查询时
+
+- 使用 DuckDB 技术栈，连接方式如下（本地文件数据库，无需环境变量）：
+```python
+import duckdb
+
+conn = duckdb.connect("case/.cache/data.db")
+```
+- 可配合 pandas 进行数据转换与清洗
+- 查询结果优先使用 `.df()` / `.fetchdf()` 方法转为 DataFrame 再继续处理

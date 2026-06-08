@@ -2,6 +2,8 @@ import functools as f
 import pathlib as p
 import typing as t
 
+import PyPDF2
+
 from ..type import PathLike, Strings
 
 
@@ -28,6 +30,15 @@ class Statistics:
             ans += float(path.read_text())
         return ans
 
+    @f.cached_property
+    def pages(self) -> int:
+        ans = 0
+        for path in self._dir.rglob("slides/main.pdf"):
+            with open(path, "rb") as file:
+                reader = PyPDF2.PdfReader(file)
+                ans += len(reader.pages)
+        return ans
+
     @f.lru_cache
     def lines(self, suffix: str) -> int:
         ans = 0
@@ -37,7 +48,10 @@ class Statistics:
         return ans
 
     def summary(self, suffixes: Strings = ["py", "md"]) -> str:
-        lines = [f"time = {self.minutes:.1f} min"]
+        lines = [
+            f"pdf = {self.pages} pages",
+            f"run = {self.minutes:.1f} minutes",
+        ]
         for suffix in suffixes:
             lines.append(f"lines@{suffix} = {self.lines(suffix)}")
         return "\n".join(lines)
