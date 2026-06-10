@@ -29,9 +29,14 @@ for dir_src in root_src.iterdir():
             copy = shutil.copytree if src.endswith("/") else shutil.copyfile
             copy(file_src, file_dst)
     for cache in dir_dst.rglob(".cache"):
-        shutil.rmtree(cache)
+        for path in cache.iterdir():
+            if path.is_file() and path.suffix != ".time":
+                path.unlink()
+            elif path.is_dir():
+                shutil.rmtree(path)
+    group = f"case-{dir_src.name}"
     sp.run(
-        ["uv", "export", "--only-group=case", "--output-file=requirements.txt"],
+        ["uv", "export", f"--only-group={group}", "--output-file=requirements.txt"],
         cwd=dir_dst,
         capture_output=True,
         check=True,

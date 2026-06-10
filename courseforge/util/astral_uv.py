@@ -1,6 +1,7 @@
 import pathlib as p
 import subprocess as sp
 import time
+import traceback
 import typing as t
 
 from ..type import PathLike, Strings
@@ -21,7 +22,11 @@ class AstralUv:
         return self.runs(path.parent, [path.name], force)
 
     def runs(
-        self, directory: PathLike, names: Strings = [], force: bool = False
+        self,
+        directory: PathLike,
+        names: Strings = [],
+        force: bool = False,
+        extra: Strings = [],
     ) -> t.Self:
         directory = p.Path(directory)
         dir_cache = directory / ".cache"
@@ -32,7 +37,7 @@ class AstralUv:
             if not force and path_cache.exists():
                 continue
             elapsed = -time.perf_counter()
-            args = [self.exe, "run", name]
+            args = [self.exe, "run", name, *extra]
             cp = sp.run(args, cwd=directory, capture_output=True, text=True)
             elapsed += time.perf_counter()
             if cp.returncode != 0:

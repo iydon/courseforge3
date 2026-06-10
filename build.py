@@ -38,32 +38,32 @@ for yaml in p.Path("static/outline").iterdir():
             uv.format(dir_02)
         assert all(path.exists() for path in paths)
         uv.runs(dir_02)
-        # 0x03 教学课件
-        dir_03 = mkdir(cwd / "slides")
-        path = dir_03 / "main.pdf"
-        minute = 2  # minute per page
-        if not path.exists():
-            latex = LaTeX.fromDirectory(dir_03)
-            level = len(dir_03.relative_to(root).parts)
-            iroot = p.Path(*it.repeat("..", level), "static")
-            _, title, *parts = cwd.name.split(Course.sep)
-            (
-                latex.copy("static/slides/.latexmkrc")
-                .copy("static/slides/section.tex")
-                .copy_template(
-                    "static/slides/main.tex",
-                    iroot=iroot,
-                    title=title,
-                    part="/".join(parts),
-                )
-            )
-            page = 60 * info["duration"] // minute
-            oc.run_template("static/prompt/03-slides.md", page=page).consume()
-            latex.make()
-        assert path.exists()
-        # 0x04 逐字稿
-        path_04 = cwd / "verbatim.txt"
-        if path_04.exists() and not path_04.read_bytes().strip():
-            oc.run_template("static/prompt/04-verbatim.md", duration=minute).consume()
+        # # 0x03 教学课件
+        # dir_03 = mkdir(cwd / "slides")
+        # path = dir_03 / "main.pdf"
+        # minute = 2  # minute per page
+        # if not path.exists():
+        #     latex = LaTeX.fromDirectory(dir_03)
+        #     level = len(dir_03.relative_to(root).parts)
+        #     iroot = p.Path(*it.repeat("..", level), "static")
+        #     _, title, *parts = cwd.name.split(Course.sep)
+        #     (
+        #         latex.copy("static/slides/.latexmkrc")
+        #         .copy("static/slides/section.tex")
+        #         .copy_template(
+        #             "static/slides/main.tex",
+        #             iroot=iroot,
+        #             title=title,
+        #             part="/".join(parts),
+        #         )
+        #     )
+        #     page = 60 * info["duration"] // minute
+        #     oc.run_template("static/prompt/03-slides.md", page=page).consume()
+        #     latex.make()
+        # assert path.exists()
+        # # 0x04 逐字稿
+        # path_04 = cwd / "verbatim.txt"
+        # if path_04.exists() and not path_04.read_bytes().strip():
+        #     oc.run_template("static/prompt/04-verbatim.md", duration=minute).consume()
     print(f"# {stat.directory}")
     print(stat.summary())
