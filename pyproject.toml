@@ -13,5 +13,12 @@ dependencies = [
     "tqdm>=4.67.3",
 ]
 
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["courseforge"]
+
 [tool.uv.workspace]
 members = ["project/llm-dev", "project/big-data"]

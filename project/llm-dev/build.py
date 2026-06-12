@@ -1,6 +1,3 @@
-getattr(getattr(__import__("sys"), "path"), "append")("../..")
-
-
 import itertools as it
 import pathlib as p
 

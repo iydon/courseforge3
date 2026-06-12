@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.12"
 dependencies = [
+    "courseforge",
     "beautifulsoup4>=4.15.0",
     "duckdb>=1.5.3",
     "jieba>=0.42.1",
@@ -21,3 +22,6 @@ dependencies = [
     "wordcloud>=1.9.6",
     "xgboost>=3.2.0",
 ]
+
+[tool.uv.sources]
+courseforge = { workspace = true }
