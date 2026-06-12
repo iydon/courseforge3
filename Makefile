@@ -9,4 +9,4 @@ format:
 	$(UV) tool run ty check
 
 sync:
-	$(UV) sync --all-groups
+	$(UV) sync --all-packages

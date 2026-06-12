@@ -1,10 +1,11 @@
+import itertools as it
 import pathlib as p
 import subprocess as sp
 import time
-import traceback
+import tomllib
 import typing as t
 
-from ..type import PathLike, Strings
+from ..type import PathLike, Str2StrSet, Str2Strs, StrSet, Strings
 
 
 class AstralUv:
@@ -17,9 +18,9 @@ class AstralUv:
     def fromDefault(cls) -> t.Self:
         return cls()
 
-    def run(self, path: PathLike, force: bool = False) -> t.Self:
+    def run(self, path: PathLike, force: bool = False, extra: Strings = []) -> t.Self:
         path = p.Path(path)
-        return self.runs(path.parent, [path.name], force)
+        return self.runs(path.parent, [path.name], force, extra)
 
     def runs(
         self,
@@ -49,3 +50,43 @@ class AstralUv:
 
     def format(self, directory: PathLike) -> None:
         sp.run([self.exe, "format"], cwd=directory, check=True, capture_output=True)
+
+    def get_redundants(self, path_lock: PathLike) -> Str2StrSet:
+        with open(path_lock, "r") as file:
+            lock = tomllib.loads(file.read())
+        pkg2pkgs: Str2Strs = {}
+        for package in lock["package"]:
+            package: dict
+            dependencies = package.get("dependencies", [])
+            if not dependencies:
+                continue
+            name = package["name"]
+            deps = self._get_names(dependencies)
+            pkg2pkgs[name] = deps
+        grp2pkgs: Str2Strs = {
+            member: pkg2pkgs[member] for member in lock["manifest"]["members"]
+        }
+        ans: Str2StrSet = {}
+        for name, pkgs in sorted(grp2pkgs.items()):
+            mapper = {pkg: self._transitive(pkg2pkgs, pkg) for pkg in pkgs}
+            ans[name] = set()
+            for lhs, rhs in it.product(pkgs, pkgs):
+                if lhs != rhs and lhs in mapper[rhs]:
+                    ans[name].add(lhs)
+                    break
+        return ans
+
+    def _get_names(self, xs: list[dict]) -> Strings:
+        return [x["name"] for x in xs]
+
+    def _transitive(self, graph: Str2Strs, pkg: str) -> StrSet:
+        ans: StrSet = set()
+        stack = [pkg]
+        while stack:
+            current = stack.pop()
+            for pkg in graph.get(current, []):
+                if pkg in ans:
+                    continue
+                ans.add(pkg)
+                stack.append(pkg)
+        return ans

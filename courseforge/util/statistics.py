@@ -2,8 +2,6 @@ import functools as f
 import pathlib as p
 import typing as t
 
-import PyPDF2
-
 from ..type import PathLike, Strings
 
 
@@ -32,6 +30,8 @@ class Statistics:
 
     @f.cached_property
     def pages(self) -> int:
+        import PyPDF2
+
         ans = 0
         for path in self._dir.rglob("slides/main.pdf"):
             with open(path, "rb") as file:
