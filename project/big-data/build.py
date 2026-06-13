@@ -14,7 +14,7 @@ from courseforge.util.statistics import Statistics
 course = Course.fromYaml("outline.yaml")
 stat = Statistics.fromDirectory("build")
 uv = AstralUv.fromDefault()
-path_chk_src = p.Path("script/check.py")
+path_chk_src = p.Path("../../script/check.py")
 for cwd, info in tqdm.tqdm(list(course.iter_lessons(stat.directory))):
     oc = OpenCode.fromDeepSeek("pro", cwd)
     # 0x01 教师讲义

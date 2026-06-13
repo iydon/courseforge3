@@ -1,8 +1,9 @@
 import functools as f
 import pathlib as p
+import shutil
 import typing as t
 
-from ..type import PathLike, Strings
+from ..type import PathLike, Str2Strs, Strings
 
 
 class Statistics:
@@ -33,7 +34,7 @@ class Statistics:
         import PyPDF2
 
         ans = 0
-        for path in self._dir.rglob("slides/main.pdf"):
+        for path in self._dir.rglob("*.pdf"):
             with open(path, "rb") as file:
                 reader = PyPDF2.PdfReader(file)
                 ans += len(reader.pages)
@@ -55,3 +56,25 @@ class Statistics:
         for suffix in suffixes:
             lines.append(f"lines@{suffix} = {self.lines(suffix)}")
         return "\n".join(lines)
+
+    def clone(
+        self, directory: PathLike, src2dsts: Str2Strs = {}, force: bool = True
+    ) -> t.Self:
+        dir_src, dir_dst = self._dir, p.Path(directory)
+        other = self.fromDirectory(dir_dst)
+        if dir_dst.exists():
+            if force:
+                shutil.rmtree(dir_dst)
+            else:
+                return other
+        for path_src in self._dir.iterdir():
+            if not path_src.is_dir():
+                continue
+            path_dst = dir_dst / path_src.relative_to(dir_src)
+            for src, dsts in src2dsts.items():
+                for dst in dsts or [src]:
+                    file_src, file_dst = path_src / src, path_dst / dst
+                    file_dst.parent.mkdir(parents=True, exist_ok=True)
+                    copy = shutil.copytree if src.endswith("/") else shutil.copyfile
+                    copy(file_src, file_dst)
+        return other

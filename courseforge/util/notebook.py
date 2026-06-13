@@ -1,3 +1,4 @@
+import copy
 import functools as f
 import json
 import pathlib as p
@@ -24,8 +25,20 @@ class Notebook:
         self._node: Maybe["nbformat.NotebookNode"] = None
 
     @classmethod
-    def fromPath(cls, path: PathLike) -> t.Self:
-        return cls(path)
+    def fromNode(
+        cls,
+        node: "nbformat.NotebookNode",
+        path: PathLike = "temp.ipynb",
+        timeout: int = 600,
+        clone: bool = True,
+    ) -> t.Self:
+        self = cls(path, timeout)
+        self._node = copy.deepcopy(node) if clone else node
+        return self
+
+    @classmethod
+    def fromPath(cls, path: PathLike, timeout: int = 600) -> t.Self:
+        return cls(path, timeout)
 
     @property
     def kernel(self) -> "ExecutePreprocessor":
@@ -78,34 +91,11 @@ class Notebook:
                 return False
         return True
 
-    def fix(self) -> t.Self:
-        import nbformat
-
-        nbformat.validator.normalize(self.node, version=self.version)
-        nbformat.write(self.node, self._path)
-        return self
-
     def run(self, output: Maybe[PathLike] = None, force: bool = False) -> bool:
         path_cache = self._path.parent / ".cache" / f"{self._path.name}.time"
         if not force and path_cache.exists():
             return True
         path_final = self._path if output is None else p.Path(output)
-        return self._run(path_cache, path_final)
-
-    def clear(self) -> None:
-        import nbformat
-        from nbconvert.preprocessors import ClearOutputPreprocessor
-
-        ClearOutputPreprocessor().preprocess(self.node, resources={})
-        nbformat.write(self.node, self._path)
-
-    def _log(self, message: str, kind: str = "error") -> None:
-        data = {"type": kind, "path": self._path.as_posix(), "message": message}
-        print(json.dumps(data, ensure_ascii=False), file=sys.stderr)
-
-    def _run(self, path_cache: p.Path, path_final: p.Path) -> bool:
-        import nbformat
-
         try:
             elapsed = -time.perf_counter()
             self.kernel.preprocess(self.node)
@@ -116,9 +106,44 @@ class Notebook:
         else:
             path_cache.parent.mkdir(parents=True, exist_ok=True)
             path_cache.write_text(str(elapsed))
-            path_final.parent.mkdir(parents=True, exist_ok=True)
-            nbformat.write(self.node, path_final)
+            self.to_path(path_final)
             return True
+
+    def clear(self, output: Maybe[PathLike] = None) -> t.Self:
+        from nbconvert.preprocessors import ClearOutputPreprocessor
+
+        ClearOutputPreprocessor().preprocess(self.node, resources={})
+        return self.to_path(output or self._path)
+
+    def fix(self, output: Maybe[PathLike] = None) -> t.Self:
+        import nbformat
+
+        nbformat.validator.normalize(self.node, version=self.version)
+        return self.to_path(output or self._path)
+
+    def to_path(self, path: PathLike) -> t.Self:
+        import nbformat
+
+        path = p.Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        nbformat.write(self.node, path)
+        return self
+
+    def remove_comments(self, timeout: int = 600) -> t.Self:
+        other = self.fromNode(self.node, timeout=timeout)
+        for cell in other.node["cells"]:
+            if cell["cell_type"] != "code":
+                continue
+            cell["source"] = "\n".join(
+                line
+                for line in str(cell["source"]).splitlines()
+                if not line.startswith("#")
+            ).strip()
+        return other
+
+    def _log(self, message: str, kind: str = "error") -> None:
+        data = {"type": kind, "path": self._path.as_posix(), "message": message}
+        print(json.dumps(data, ensure_ascii=False), file=sys.stderr)
 
 
 if __name__ == "__main__":
@@ -134,6 +159,6 @@ if __name__ == "__main__":
         if path_src.is_relative_to(root):
             path_src = path_src.relative_to(root)
         path_dst = path_src.with_name(f"_{path_src.name}")
-        nb = Notebook.fromPath(path_src)
-        code += not (nb.is_valid and nb.run(path_dst, force=True))
+        note = Notebook.fromPath(path_src)
+        code += not (note.is_valid and note.run(path_dst, force=True))
     sys.exit(code)

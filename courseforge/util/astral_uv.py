@@ -48,6 +48,11 @@ class AstralUv:
             path_cache.write_text(str(elapsed))
         return self
 
+    def export(self, path: PathLike = "requirements.txt") -> None:
+        path = p.Path(path)
+        args = [self.exe, "export", f"--output-file={path.name}"]
+        sp.run(args, cwd=path.parent, check=True, capture_output=True)
+
     def format(self, directory: PathLike) -> None:
         sp.run([self.exe, "format"], cwd=directory, check=True, capture_output=True)
 
