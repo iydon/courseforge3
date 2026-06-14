@@ -20,4 +20,4 @@ src2dsts = {
 old = Statistics.fromDirectory(dir_src)
 new = old.clone(dir_dst, src2dsts)
 print(new.summary())
-AstralUv.fromDefault().export(dir_dst / "requirements.txt")
+AstralUv.fromDefault().export(dir_dst / "requirements.txt", extra=["--no-hashes"])

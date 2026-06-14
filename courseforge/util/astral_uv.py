@@ -48,13 +48,14 @@ class AstralUv:
             path_cache.write_text(str(elapsed))
         return self
 
-    def export(self, path: PathLike = "requirements.txt") -> None:
+    def export(self, path: PathLike = "requirements.txt", extra: Strings = []) -> None:
         path = p.Path(path)
-        args = [self.exe, "export", f"--output-file={path.name}"]
+        args = [self.exe, "export", f"--output-file={path.name}", *extra]
         sp.run(args, cwd=path.parent, check=True, capture_output=True)
 
-    def format(self, directory: PathLike) -> None:
-        sp.run([self.exe, "format"], cwd=directory, check=True, capture_output=True)
+    def format(self, directory: PathLike, extra: Strings = []) -> None:
+        args = [self.exe, "format", *extra]
+        sp.run(args, cwd=directory, check=True, capture_output=True)
 
     def get_redundants(self, path_lock: PathLike) -> Str2StrSet:
         with open(path_lock, "r") as file:

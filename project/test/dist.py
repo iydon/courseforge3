@@ -28,4 +28,4 @@ new = old.clone(dir_dst, src2dsts)
 for path in new.directory.rglob("*_basic.ipynb"):
     Notebook.fromPath(path).remove_comments().to_path(path)
 print(new.summary())
-AstralUv.fromDefault().export(dir_dst / "requirements.txt")
+AstralUv.fromDefault().export(dir_dst / "requirements.txt", extra=["--no-hashes"])
