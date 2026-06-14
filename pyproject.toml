@@ -17,4 +17,4 @@ dependencies = [
 packages = ["courseforge"]
 
 [tool.uv.workspace]
-members = ["project/llm-dev", "project/big-data"]
+members = ["project/llm-dev", "project/big-data", "project/test"]

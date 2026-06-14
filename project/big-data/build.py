@@ -41,7 +41,7 @@ for cwd, info in tqdm.tqdm(list(course.iter_lessons(stat.directory))):
         path_dst = path_src.with_name(f"_{path_src.name}")
         if path_dst.exists():
             continue
-        assert Notebook.fromPath(path_src).fix().run(path_dst, force=True)
+        assert Notebook.fromPath(path_src).fix().run(path_dst)
         uv.format(dir_02)
     path_chk_dst.unlink()
     # 0x03 教学课件 + 逐字稿
