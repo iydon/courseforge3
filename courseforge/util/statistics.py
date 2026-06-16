@@ -1,11 +1,14 @@
-import collections as c
 import functools as f
 import pathlib as p
 import shutil
 import typing as t
 
 from .notebook import Notebook
-from ..type import PathLike, Str2Int, Str2Strs
+from ..type import Number, PathLike, Str2Int, Str2Strs
+
+
+type KeyValueUnit = tuple[str, Number, str]
+type Metrics = list[KeyValueUnit]
 
 
 class Statistics:
@@ -44,7 +47,7 @@ class Statistics:
 
     @f.cached_property
     def notebook(self) -> Str2Int:
-        ans = c.defaultdict(int)
+        ans = {"code": 0, "markdown": 0}
         for path in self._dir.rglob("*.ipynb"):
             note = Notebook.fromPath(path)
             cells: list[dict] = note.node["cells"]
@@ -52,7 +55,7 @@ class Statistics:
                 kind: str = cell["cell_type"]
                 text: str = cell["source"]
                 ans[kind] += len(text.splitlines())
-        return dict(ans)
+        return ans
 
     @f.lru_cache
     def lines(self, suffix: str) -> int:
@@ -62,17 +65,24 @@ class Statistics:
                 ans += sum(1 for _ in file)
         return ans
 
-    def summary(self) -> str:
-        lines = [
-            f"pdf = {self.pages} pages",
-            f"run = {self.minutes:.1f} minutes",
+    def metrics(self) -> Metrics:
+        items = [
+            ("PDF", self.pages, "pages"),
+            ("Runtime", self.minutes, "minutes"),
+            ("Python", self.lines("py"), "lines"),
+            ("Markdown", self.lines("md"), "lines"),
         ]
-        for suffix in ["py", "md"]:
-            lines.append(f"lines@{suffix} = {self.lines(suffix)}")
         for kind, line in self.notebook.items():
-            kind = {"markdown": "md", "code": "py"}[kind]
-            lines.append(f"lines@{kind}.ipynb = {line}")
-        return "\n".join(lines)
+            kind = {"code": "Python", "markdown": "Markdown"}[kind]
+            items.append((f"Jupyter > {kind}", line, "lines"))
+        return items
+
+    def summary(self, **kwargs) -> str:
+        from tabulate import tabulate
+
+        headers = ["Metric", "Value", "Unit"]
+        kwargs = {"tablefmt": "github"} | kwargs
+        return tabulate(self.metrics(), headers, **kwargs)
 
     def clone(
         self, directory: PathLike, src2dsts: Str2Strs = {}, force: bool = True

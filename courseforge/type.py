@@ -6,6 +6,7 @@ type Maybe[T] = T | None
 type Gen[T] = t.Generator[T, None, None]
 
 type Floats = list[float]
+type Number = float | int
 type PathLike = str | p.Path
 type PathLikes = list[PathLike]
 type Str2Int = dict[str, int]
