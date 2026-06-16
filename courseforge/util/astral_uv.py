@@ -1,4 +1,4 @@
-import itertools as it
+import functools as f
 import pathlib as p
 import subprocess as sp
 import time
@@ -17,6 +17,29 @@ class AstralUv:
     @classmethod
     def fromDefault(cls) -> t.Self:
         return cls()
+
+    @f.cached_property
+    def lock(self) -> dict:
+        with open("uv.lock", "r") as file:
+            return tomllib.loads(file.read())
+
+    @f.cached_property
+    def members(self) -> Strings:
+        return self.lock["manifest"]["members"]
+
+    @f.cached_property
+    def pkg2pkgs(self) -> Str2Strs:
+        ans = {}
+        for package in self.lock["package"]:
+            deps = dict(package).get("dependencies", [])
+            if not deps:
+                continue
+            ans[package["name"]] = [x["name"] for x in deps]
+        return ans
+
+    @f.cached_property
+    def grp2pkgs(self) -> Str2Strs:
+        return {member: self.pkg2pkgs.get(member, []) for member in self.members}
 
     def run(self, path: PathLike, force: bool = False, extra: Strings = []) -> t.Self:
         path = p.Path(path)
@@ -57,33 +80,25 @@ class AstralUv:
         args = [self.exe, "format", *extra]
         sp.run(args, cwd=directory, check=True, capture_output=True)
 
-    def get_redundants(self, path_lock: PathLike) -> Str2StrSet:
-        with open(path_lock, "r") as file:
-            lock = tomllib.loads(file.read())
-        pkg2pkgs: Str2Strs = {}
-        for package in lock["package"]:
-            package: dict
-            dependencies = package.get("dependencies", [])
-            if not dependencies:
-                continue
-            name = package["name"]
-            deps = self._get_names(dependencies)
-            pkg2pkgs[name] = deps
-        grp2pkgs: Str2Strs = {
-            member: pkg2pkgs[member] for member in lock["manifest"]["members"]
-        }
+    def get_redundants(self, root: str = "courseforge") -> Str2StrSet:
         ans: Str2StrSet = {}
-        for name, pkgs in sorted(grp2pkgs.items()):
-            mapper = {pkg: self._transitive(pkg2pkgs, pkg) for pkg in pkgs}
+        closure: StrSet = set()
+        for dep in self.grp2pkgs.get(root, []):
+            closure.add(dep)
+            closure.update(self._transitive(self.pkg2pkgs, dep))
+        for name, pkgs in sorted(self.grp2pkgs.items()):
+            mapper = {pkg: self._transitive(self.pkg2pkgs, pkg) for pkg in pkgs}
             ans[name] = set()
-            for lhs, rhs in it.product(pkgs, pkgs):
-                if lhs != rhs and lhs in mapper[rhs]:
-                    ans[name].add(lhs)
-                    break
+            for lhs in pkgs:
+                for rhs in pkgs:
+                    if lhs != rhs and lhs in mapper.get(rhs, set()):
+                        ans[name].add(lhs)
+                        break
+            if name != root:
+                ans[name].update(
+                    pkg for pkg in pkgs if pkg not in self.members and pkg in closure
+                )
         return ans
-
-    def _get_names(self, xs: list[dict]) -> Strings:
-        return [x["name"] for x in xs]
 
     def _transitive(self, graph: Str2Strs, pkg: str) -> StrSet:
         ans: StrSet = set()

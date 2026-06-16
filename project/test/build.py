@@ -1,5 +1,3 @@
-import pathlib as p
-
 import tqdm
 
 from courseforge.base import Course

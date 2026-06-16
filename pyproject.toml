@@ -4,12 +4,10 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.12"
 dependencies = [
-    "httpx>=0.28.1",
     "ipykernel>=7.3.0",
     "nbconvert>=7.17.1",
     "pypdf2>=3.0.1",
     "pyyaml>=6.0.3",
-    "tenacity>=9.1.4",
     "tqdm>=4.67.3",
 ]
 
@@ -17,4 +15,9 @@ dependencies = [
 packages = ["courseforge"]
 
 [tool.uv.workspace]
-members = ["project/llm-dev", "project/big-data", "project/test"]
+members = [
+    "project/big-data",
+    "project/fin-agt",
+    "project/llm-dev",
+    "project/test",
+]

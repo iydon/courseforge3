@@ -1,9 +1,11 @@
+import collections as c
 import functools as f
 import pathlib as p
 import shutil
 import typing as t
 
-from ..type import PathLike, Str2Strs, Strings
+from .notebook import Notebook
+from ..type import PathLike, Str2Int, Str2Strs
 
 
 class Statistics:
@@ -40,6 +42,18 @@ class Statistics:
                 ans += len(reader.pages)
         return ans
 
+    @f.cached_property
+    def notebook(self) -> Str2Int:
+        ans = c.defaultdict(int)
+        for path in self._dir.rglob("*.ipynb"):
+            note = Notebook.fromPath(path)
+            cells: list[dict] = note.node["cells"]
+            for cell in cells:
+                kind: str = cell["cell_type"]
+                text: str = cell["source"]
+                ans[kind] += len(text.splitlines())
+        return dict(ans)
+
     @f.lru_cache
     def lines(self, suffix: str) -> int:
         ans = 0
@@ -48,13 +62,16 @@ class Statistics:
                 ans += sum(1 for _ in file)
         return ans
 
-    def summary(self, suffixes: Strings = ["py", "md"]) -> str:
+    def summary(self) -> str:
         lines = [
             f"pdf = {self.pages} pages",
             f"run = {self.minutes:.1f} minutes",
         ]
-        for suffix in suffixes:
+        for suffix in ["py", "md"]:
             lines.append(f"lines@{suffix} = {self.lines(suffix)}")
+        for kind, line in self.notebook.items():
+            kind = {"markdown": "md", "code": "py"}[kind]
+            lines.append(f"lines@{kind}.ipynb = {line}")
         return "\n".join(lines)
 
     def clone(
