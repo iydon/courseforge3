@@ -85,7 +85,11 @@ class Statistics:
         return tabulate(self.metrics(), headers, **kwargs)
 
     def clone(
-        self, directory: PathLike, src2dsts: Str2Strs = {}, force: bool = True
+        self,
+        directory: PathLike,
+        src2dsts: Str2Strs = {},
+        force: bool = True,
+        skip_missing: bool = False,
     ) -> t.Self:
         dir_src, dir_dst = self._dir, p.Path(directory)
         other = self.fromDirectory(dir_dst)
@@ -101,6 +105,11 @@ class Statistics:
             for src, dsts in src2dsts.items():
                 for dst in dsts or [src]:
                     file_src, file_dst = path_src / src, path_dst / dst
+                    if not file_src.exists():
+                        if skip_missing:
+                            continue
+                        else:
+                            raise FileNotFoundError(file_src)
                     file_dst.parent.mkdir(parents=True, exist_ok=True)
                     copy = shutil.copytree if src.endswith("/") else shutil.copyfile
                     copy(file_src, file_dst)

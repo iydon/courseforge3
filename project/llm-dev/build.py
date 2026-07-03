@@ -62,7 +62,7 @@ for cwd, info in tqdm.tqdm(list(course.iter_lessons(stat.directory))):
     assert path.exists()
     # 0x04 逐字稿
     path_04 = cwd / "verbatim.txt"
-    if path_04.exists() and not path_04.read_bytes().strip():
+    if path_04.exists() and not path_04.read_bytes():
         oc.run_template("prompt/04-verbatim.md", duration=minute).consume()
 print(f"# {stat.directory}")
 print(stat.summary())

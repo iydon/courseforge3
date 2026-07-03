@@ -8,7 +8,7 @@ dir_src = p.Path("build")
 dir_dst = p.Path("dist")
 src2dsts = {
     "README.md": [],
-    # "verbatim.txt": [],
+    "verbatim.txt": [],
     "slides/main.pdf": ["slides.pdf"],
     "case/.cache/1.py.time": [],
     "case/.cache/2.py.time": [],
@@ -18,6 +18,6 @@ src2dsts = {
     "case/3.py": [],
 }
 old = Statistics.fromDirectory(dir_src)
-new = old.clone(dir_dst, src2dsts)
+new = old.clone(dir_dst, src2dsts, skip_missing=True)
 print(new.summary())
 AstralUv.fromDefault().export(dir_dst / "requirements.txt", extra=["--no-hashes"])
