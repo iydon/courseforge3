@@ -43,14 +43,14 @@ for cwd, info in tqdm.tqdm(list(course.iter_lessons(stat.directory))):
     minute = 2  # minute per page
     if not path.exists():
         latex = LaTeX.fromDirectory(dir_03)
-        level = len(dir_03.relative_to(root).parts)
+        level = len(dir_03.relative_to(root).parts) + 2
         iroot = p.Path(*it.repeat("..", level), "static")
         _, title, *parts = cwd.name.split(Course.sep)
         (
-            latex.copy("static/slides/.latexmkrc")
-            .copy("static/slides/section.tex")
+            latex.copy("../../static/slides/.latexmkrc")
+            .copy("../../static/slides/section.tex")
             .copy_template(
-                "static/slides/main.tex",
+                "../../static/slides/main.tex",
                 iroot=iroot,
                 title=title,
                 part="/".join(parts),

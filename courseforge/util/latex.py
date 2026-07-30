@@ -43,6 +43,7 @@ class LaTeX:
             path_dst.write_text(text)
         return self
 
-    def make(self, *args: str) -> None:
-        cp = sp.run([self.exe, *args], cwd=self._cwd, capture_output=True)
+    def make(self, *args: str, raw: bool = False) -> None:
+        exe = "make" if raw else self.exe
+        cp = sp.run([exe, *args], cwd=self._cwd, capture_output=True)
         assert cp.returncode == 0, cp.stderr.decode()
