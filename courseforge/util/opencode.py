@@ -38,6 +38,11 @@ class OpenCode:
         model = f"deepseek/deepseek-v4-{kind}"
         return cls(*args, model=model, **kwargs)
 
+    @classmethod
+    def fromDeepSeekFlash(cls, *args, **kwargs) -> t.Self:
+        model = f"deepseek/deepseek-flash"
+        return cls(*args, model=model, **kwargs)
+
     @property
     def cwd(self) -> p.Path:
         return self._cwd

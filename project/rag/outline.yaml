@@ -1,0 +1,31 @@
+RAG技术全栈实战课程:
+  RAG核心概念架构总览:
+    detail: 深入剖析大模型核心能力与局限性，讲解幻觉产生原因和知识截止现象。梳理 RAG 架构的核心思想，拆解三步流程的实现逻辑。建立 Embedding 向量化的基础直觉，了解其在语义检索中的关键作用。分析 DeepSeek 云端大模型与本地 HuggingFace Embedding 模型协同工作的混合架构，明确各组件职责边界。
+    duration: 1
+  uv依赖管理环境搭建:
+    detail: 安装 uv 工具并初始化项目，使用 uv init 创建 pyproject.toml 配置文件。掌握 uv add 添加依赖和 uv sync 同步环境的命令，安装 llama-index 核心框架及 llama-index-readers-docling 文档解析组件。配置 DeepSeek 平台 API Key 与 base_url，使用 OpenAILike 初始化大模型。利用 HuggingFaceEmbedding 加载本地向量模型，默认缓存至系统路径。运行第一次对话与文本向量化验证。
+    duration: 1
+  LlamaIndex基础RAG流水线构建:
+    detail: 掌握 LlamaIndex 的 Settings 全局配置，接入 OpenAILike 与 HuggingFaceEmbedding。使用 DoclingReader 加载文档，通过 DoclingNodeParser 进行结构化切分。从零搭建端到端 RAG 核心链路，完成文档加载、文本切分、本地向量化入库、相似检索、DeepSeek 生成回答五大步骤。提供完整可运行的代码示例，梳理全流程常见报错与调试排查方法。
+    duration: 2
+  Docling文档解析切块策略:
+    detail: 详解 Docling 对 PDF Word 网页 CSV 等常见格式的解析与文本提取技术，掌握 DoclingReader 的 Markdown 与 JSON 两种导出模式。讲解文本清洗规则去除无用字符。深入探讨 DoclingNodeParser 配合 HierarchicalChunker 的层次化切分机制。介绍元数据附加在后续检索中的重要性，并结合本地 Embedding 模型特点说明切块粒度对检索精度的影响。
+    duration: 2
+  本地向量化FAISS建库实战:
+    detail: 剖析向量空间模型基本原理，讲解余弦相似度与欧氏距离计算方式。使用 HuggingFaceEmbedding 加载本地 BGE 系列模型，合理设置 embed_batch_size 适配本地硬件。手把手搭建 FAISS 向量数据库，通过 FaissVectorStore 与 StorageContext 集成，实现向量的高效存储、索引构建与持久化保存。
+    duration: 2
+  检索排序重排机制:
+    detail: 讲解基于 LlamaIndex VectorIndexRetriever 的 Top-K 检索与相似度阈值过滤机制。介绍 BM25 传统关键词检索算法。深入剖析混合检索架构如何兼顾语义与关键词。实战引入重排模型对初步召回结果进行精准排序，对比不同检索策略的召回效果。
+    duration: 2
+  RAG专用提示词工程:
+    detail: 设计 RAG 专用 Prompt 系统模板，利用 LlamaIndex 的 QA Prompt 模板定制机制。讲解如何在提示词中约束模型行为并要求回答附带出处。分享抑制 DeepSeek 模型幻觉的提示词技巧与上下文截断策略。通过对比实验展示不同提示词对最终回答质量的影响。
+    duration: 1
+  检索效果优化评估:
+    detail: 讲解 Query 改写技术提升召回率。构建多路召回架构。建立完善的评估指标体系，重点计算命中率和忠实度。通过实际案例展示如何量化分析检索效果并定位瓶颈。
+    duration: 1
+  综合实战知识库问答应用:
+    detail: 完整项目驱动教学，构建垂直领域的知识库问答系统。使用 DoclingReader 统一解析各类格式文档，通过 DoclingNodeParser 完成结构化切分。使用 LlamaIndex 搭建索引与查询引擎，集成 OpenAILike 对话接口与本地 HuggingFace Embedding。开发 Streamlit 聊天界面，使用 st.chat_input 和 st.chat_message 实现会话交互，通过 LlamaIndex 的 ChatEngine 管理对话上下文，完成前后端联调。
+    duration: 2
+  总结复盘进阶路线:
+    detail: 全面复盘 RAG 全流程开发经验与最佳实践。深入探索 Agent 智能体与 RAG 的结合方式。了解多模态 RAG 如何处理图文音视频数据。展望 GraphRAG 利用知识图谱增强检索的前沿技术方向。
+    duration: 2

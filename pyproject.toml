@@ -21,5 +21,6 @@ members = [
     "project/fin-agt",
     "project/llm-dev",
     "project/quant",
+    "project/rag",
     "project/test",
 ]
