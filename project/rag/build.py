@@ -1,3 +1,4 @@
+import contextlib
 import itertools as it
 import pathlib as p
 import shutil
@@ -44,7 +45,8 @@ for cwd, info in tqdm.tqdm(list(course.iter_lessons(stat.directory))):
         path_dst = path_src.with_name(f"_{path_src.name}")
         if path_dst.exists():
             continue
-        assert Notebook.fromPath(path_src).fix().run(path_dst)
+        with contextlib.chdir(cwd):
+            assert Notebook.fromPath(path_src).fix().run(path_dst)
         uv.format(dir_02)
     path_chk_dst.unlink()
     # 0x03 教学课件
@@ -74,6 +76,5 @@ for cwd, info in tqdm.tqdm(list(course.iter_lessons(stat.directory))):
     path_04 = cwd / "verbatim.txt"
     if not path_04.exists():
         oc.run_template("prompt/04-verbatim.md", duration=minute).consume()
-    break
 print(f"# {stat.directory}")
 print(stat.summary())

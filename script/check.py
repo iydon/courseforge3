@@ -1,6 +1,6 @@
 """Validate and execute Jupyter Notebooks using courseforge.
 
-Usage: uv run script/check.py <notebook.ipynb> [<notebook2.ipynb> ...]
+Usage: uv run check.py <notebook.ipynb> [<notebook2.ipynb> ...]
 
 Performs two stages for each notebook:
   1. Validate  —— JSON structure / nbformat compliance

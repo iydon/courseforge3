@@ -341,6 +341,18 @@ css = [
 ]
 
 [[package]]
+name = "bm25s"
+version = "0.3.13"
+source = { registry = "https://mirrors.nju.edu.cn/pypi/web/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+sdist = { url = "https://mirrors.nju.edu.cn/pypi/web/packages/61/ed/5cef92cb5be8963f17a5d6a31bf20c8b0af466b0dc76fc7951f2b727df4a/bm25s-0.3.13.tar.gz", hash = "sha256:49d76bf892ee730beda6d280a13d34b05d630a63988ae246944a81ce8bd15a12" }
+wheels = [
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/8e/b7/88807a1bc1dfca8f88a0ed0bbc1eff59287c4636dbf3386117c552a682bd/bm25s-0.3.13-py3-none-any.whl", hash = "sha256:caf033369ec16586430544cf31321ff1a284c7c02f2aff87c4f7a2629f031f0e" },
+]
+
+[[package]]
 name = "certifi"
 version = "2026.6.17"
 source = { registry = "https://mirrors.nju.edu.cn/pypi/web/simple" }
@@ -990,6 +1002,29 @@ source = { registry = "https://mirrors.nju.edu.cn/pypi/web/simple" }
 sdist = { url = "https://mirrors.nju.edu.cn/pypi/web/packages/cc/28/c14e053b6762b1044f34a13aab6859bbf40456d37d23aa286ac24cfd9a5d/executing-2.2.1.tar.gz", hash = "sha256:3632cc370565f6648cc328b32435bd120a1e4ebb20c77e3fdde9a13cd1e533c4" }
 wheels = [
     { url = "https://mirrors.nju.edu.cn/pypi/web/packages/c1/ea/53f2148663b321f21b5a606bd5f191517cf40b7072c0497d3c92c4a13b1e/executing-2.2.1-py2.py3-none-any.whl", hash = "sha256:760643d3452b4d777d295bb167ccc74c64a81df23fb5e08eff250c425a4b2017" },
+]
+
+[[package]]
+name = "faiss-cpu"
+version = "1.15.1"
+source = { registry = "https://mirrors.nju.edu.cn/pypi/web/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "packaging" },
+]
+wheels = [
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/9b/ed/d1b8e6720e9947469cab45dbfbf1b82e1d5acf9fe063dc97a6e82db83094/faiss_cpu-1.15.1-cp310-abi3-macosx_14_0_arm64.whl", hash = "sha256:ea9e12d540ca8ac0347b831d034c0f6d7ff5eed20523a247db44b3543ad2aad4" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/ef/75/eb2f36334a58b343a87a2c1feaa747655fde7efdaad9c5d9eb367da89f15/faiss_cpu-1.15.1-cp310-abi3-macosx_15_0_x86_64.whl", hash = "sha256:f52e727992ce86a783f61657f0c4f3498a235883083b982ba1be49d05f924450" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/a3/90/695eeab44921bb475611fc71ec0a74af82080f496cb7586c6490e4f322d2/faiss_cpu-1.15.1-cp310-abi3-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:ffa71b14b3090bc076f8b026554178868fdbfe2f26fe644da629405836369039" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/6c/f4/098bd9d178ae36fa078c66068d3264e27fff4308d5131655e5e743153d4c/faiss_cpu-1.15.1-cp310-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:f2c31b7f2f6647eb76829a5cfe3c398fb9346df9f26b1d4db35269c91eb58c33" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/3c/a7/d9e88b337f9636e0e80b651bfd27dbff533820d26c250bb60d2122de18a9/faiss_cpu-1.15.1-cp310-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:2d0a59d8ee9ffcac34608f591d16b617d9056e12a26a8b8cf0015b6b334e33e1" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/01/28/0855b161a081556a1df0ff14d5e7e73db23bd24ed85505009387fb61762e/faiss_cpu-1.15.1-cp310-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:d4a250000112ac26ae79530e67a18fa986c8b7b0329154aefeb7692b270ed366" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/69/19/a4bd07c73f17556eff1599e27918b8a97eaab468aea7b143bd49ca0535eb/faiss_cpu-1.15.1-cp312-cp312-win_amd64.whl", hash = "sha256:38d192695210a51ff72449d8802ff62601568fcfc6372222a64a069da0ecdb10" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/56/35/c79cd7321c6d8af277691e7a7ca1dd362e0fff24a9697aa944781cdb8c75/faiss_cpu-1.15.1-cp312-cp312-win_arm64.whl", hash = "sha256:4fd6623ed931d16256b268ac2984f672cdf1929702e24b3e741798d0bb08804f" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/98/ae/e31e9c30f686681b78bd089edbefd3675602132612ce5dd187275be8b773/faiss_cpu-1.15.1-cp313-cp313-win_amd64.whl", hash = "sha256:8a577dd6d52f685326570105c3d18feb3776799d080534e329a191740d6362b6" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/dc/49/96bfac5586cc84bad3dae85dd29595512883327789573e6e81541646b5ef/faiss_cpu-1.15.1-cp313-cp313-win_arm64.whl", hash = "sha256:a26acb421037b030c1e9eea342adff5a0e1b6faab9e626be64b5f598241e5592" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/98/82/4b1866e93b85247774dbd67afc95fbe5d02097ee125cf4ed11c90515717b/faiss_cpu-1.15.1-cp314-cp314-win_amd64.whl", hash = "sha256:c18b569ec5d5e79f2156f0059fdb3ea79976f365d79291252ab6b45d40523c2c" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/61/23/8da811ff180c8f4f96f23bed84a1a235fad371f6b21ae5395d3e42d4ca95/faiss_cpu-1.15.1-cp314-cp314-win_arm64.whl", hash = "sha256:dc1cd974cd5477ca5d01d9f9ecba6a7fc555b6ef2eda7b16c97e20903431dc6b" },
 ]
 
 [[package]]
@@ -2118,6 +2153,19 @@ wheels = [
 ]
 
 [[package]]
+name = "llama-index-node-parser-docling"
+version = "0.5.0"
+source = { registry = "https://mirrors.nju.edu.cn/pypi/web/simple" }
+dependencies = [
+    { name = "docling-core" },
+    { name = "llama-index-core" },
+]
+sdist = { url = "https://mirrors.nju.edu.cn/pypi/web/packages/47/99/d01d1a8965ee8cd77c9b2e78048b9aad99875685a92472ce09ad69897299/llama_index_node_parser_docling-0.5.0.tar.gz", hash = "sha256:e31a7550a0da667ff01631931e368aaf97b70069bb09ed7da4366468c213f07f" }
+wheels = [
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/7f/93/0546f3679296eabfb4e9370281d4e0ec39f268c3d48201a3e8fdd33b957c/llama_index_node_parser_docling-0.5.0-py3-none-any.whl", hash = "sha256:f4b71ac4fd525c44b27ce71fa47a353aa30fab9350f049a6e0ea61cc4733a1a8" },
+]
+
+[[package]]
 name = "llama-index-readers-docling"
 version = "0.5.0"
 source = { registry = "https://mirrors.nju.edu.cn/pypi/web/simple" }
@@ -2130,6 +2178,20 @@ dependencies = [
 sdist = { url = "https://mirrors.nju.edu.cn/pypi/web/packages/ba/b0/6b2a825cd1923f88754a5887ad33adce45836509896577f16e1c238f0c6e/llama_index_readers_docling-0.5.0.tar.gz", hash = "sha256:0e593571c15019dbd36167aee8b86bfafa4f1c74871a8b1339e5b7345f4243ba" }
 wheels = [
     { url = "https://mirrors.nju.edu.cn/pypi/web/packages/70/38/031a4de7760828940de96819256292039908b3d51f9e6825e4d0130a1bf4/llama_index_readers_docling-0.5.0-py3-none-any.whl", hash = "sha256:5cac74c9fb8e7c10c19f763fd8902ae01a8a22b214e4fe7c1ba743f23e89238a" },
+]
+
+[[package]]
+name = "llama-index-retrievers-bm25"
+version = "0.8.0"
+source = { registry = "https://mirrors.nju.edu.cn/pypi/web/simple" }
+dependencies = [
+    { name = "bm25s" },
+    { name = "llama-index-core" },
+    { name = "pystemmer" },
+]
+sdist = { url = "https://mirrors.nju.edu.cn/pypi/web/packages/f3/96/b7241a69f8547b4476bdb70516144447f3893a0e4bf654226e93e3774ca2/llama_index_retrievers_bm25-0.8.0.tar.gz", hash = "sha256:8c487725129556485bb14a8363d5b15999c2392a7c4e02819f429c56ec3a9e3c" }
+wheels = [
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/84/1f/029ef9638c7283fc078fb58c799c0adaddcb12400bedb8cfefbb24bac1bf/llama_index_retrievers_bm25-0.8.0-py3-none-any.whl", hash = "sha256:ef00595e9d5b059619bfc9c6ef2021447e2412c0b55d02d9c2fb766ea2613547" },
 ]
 
 [[package]]
@@ -3852,6 +3914,30 @@ wheels = [
 ]
 
 [[package]]
+name = "pystemmer"
+version = "2.2.0.3"
+source = { registry = "https://mirrors.nju.edu.cn/pypi/web/simple" }
+sdist = { url = "https://mirrors.nju.edu.cn/pypi/web/packages/26/12/0378ba4391a4674067ae9db0e025ec998f6ca74caddd22fbdc59dc19aafb/pystemmer-2.2.0.3.tar.gz", hash = "sha256:9ac74c8d0f3358dbb050f64cddbb8d55021d831d92305d7c20780ea8d6c0020e" }
+wheels = [
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/81/7c/e09c0ac1aa4571ded5f46c14aed5d4828b61392611ed1c59a8faf1cae98a/PyStemmer-2.2.0.3-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:c30c44241065beb9432273874f199fc109473338d9f2c921a3387fd534fd94a7" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/e5/dc/b30dd228af740b1ffe18e4cfb48c22aa8481ce1e79405cac31086fb849bd/PyStemmer-2.2.0.3-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:a6adf0b86b6be85f0cf80b2b255b2b0179782b4a3f39c0a6c5b3dd07af5f95eb" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/f7/68/eb9f06b2f04f408ed748d6e71fb2f5ae92deba0eea07b6e374268d53cb49/PyStemmer-2.2.0.3-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:2d42b41082553fa23a4ce191860fd7caffdeaf8507e84db630a97ed154bd2320" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/a6/9f/e95eeccf29ad1e1dbf4a14b76e2fa5b6698ba06f10634b097b32258839b0/PyStemmer-2.2.0.3-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ec763ee2994402c534bf898ff318edd158c32071c3ffbdcd7ae7b7c884250471" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/3b/4b/8b077958eb760ac647d2362f8bd1ae99097fa351edc6333fde0dee51f912/PyStemmer-2.2.0.3-cp312-cp312-musllinux_1_2_i686.whl", hash = "sha256:264f09d5f70b09c845a6f0d0d4973de674056fd50452cb9383ffae8fc0967f1d" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/7f/13/3d57038439293d93e40af89b48bc06c714f8cd8c5d22a9e6d0870f49ea1c/PyStemmer-2.2.0.3-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:5634f38a781b9a893550c23380af080ca5291d19c2bcb1753a34022d1d0de7cb" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/9a/95/f04305ab6fc6312b4727b725ab983342237c7bb95d21d98bd768146dd9e8/PyStemmer-2.2.0.3-cp312-cp312-win32.whl", hash = "sha256:186c2e90ea2c3d0fab21f10f17b48fb7d716cba5f49b68f7f0fe539db4ff0499" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/0f/73/861a71009f20331cd22aff1c37b9c39ef3af4d57d6816df79d51b3fca533/PyStemmer-2.2.0.3-cp312-cp312-win_amd64.whl", hash = "sha256:320c1da333f5f8571e2b313c9fa6c0a7a79d8a00a2ad0bf29932d931d236d7e8" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/c0/eb/b39bef7c8ec2ad9e198b956104741c1e7a94f0003875ef0a5a32ae20443f/PyStemmer-2.2.0.3-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:806530b6a1542efd6453fc5f5b5aa348d52c337d0eb1dfc54a5ff6a8733d7ccc" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/ad/db/93f0fd99c99cfdfb68a6d671324ceb3e9c0cf2040f47d917a42e615faf03/PyStemmer-2.2.0.3-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:d3fe53911811ec554b13a2c3b0ceb1a23c6fbed3d510ea0d8544a4e0b861e4d6" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/5c/52/cb3ad58e8ce701c97a38f7828d899cfd12f0b7b06c49a4d67a17298641eb/PyStemmer-2.2.0.3-cp313-cp313-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:cf26cc1071685597b54b78dd2f62080c58f9be1cb9b4f9c92f94d5c0b5e5e65d" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/c6/e7/d22c50ac8e76c2878cc1056010d0db26b7e5a7936262320c62a6dcdfdbc9/PyStemmer-2.2.0.3-cp313-cp313-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f3d229a8451e5e909c3f41e19c2f1c9a531d3281954a8cbc06163a458adcc465" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/90/bd/cd603a89316769c4ae3a4d2271c9c9707b26939517bbe2f780c4f171ade3/PyStemmer-2.2.0.3-cp313-cp313-musllinux_1_2_i686.whl", hash = "sha256:f44e27fbdeffd46b513ed80d5dab0c7e0e09fb1cd85e8dbf8041b6e4a2d55bee" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/0a/0e/7fad0a408def5738ce1deffc6242bd8086f76fae1f7a5a4c36e31ab528d0/PyStemmer-2.2.0.3-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:4acd71d4359399e41543198caf150e7f398a8d52e371a0c89ba63a90ec3e0909" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/11/79/3f429bd0c97fe95d62aee32216dfbe3db9a59c3a8a3ff185bb1927e45658/PyStemmer-2.2.0.3-cp313-cp313-win32.whl", hash = "sha256:91ab47d071383b5c558542bf54facf116f3fd1516c177ef10843f41e528d8873" },
+    { url = "https://mirrors.nju.edu.cn/pypi/web/packages/71/65/87b637539c73bf5b1074eba87389616949e073d91f6c670a4d91e16504de/PyStemmer-2.2.0.3-cp313-cp313-win_amd64.whl", hash = "sha256:4e192613a1e02b0cebcbb9f8a708001bdf7ec842972b42008f3b0b006a8c53b6" },
+]
+
+[[package]]
 name = "python-dateutil"
 version = "2.9.0.post0"
 source = { registry = "https://mirrors.nju.edu.cn/pypi/web/simple" }
@@ -4057,18 +4143,24 @@ name = "rag"
 version = "0.1.0"
 source = { virtual = "project/rag" }
 dependencies = [
+    { name = "faiss-cpu" },
     { name = "llama-index-embeddings-huggingface" },
     { name = "llama-index-llms-openai-like" },
+    { name = "llama-index-node-parser-docling" },
     { name = "llama-index-readers-docling" },
+    { name = "llama-index-retrievers-bm25" },
     { name = "llama-index-vector-stores-faiss" },
     { name = "streamlit" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "faiss-cpu", specifier = ">=1.15.1" },
     { name = "llama-index-embeddings-huggingface", specifier = ">=0.8.0" },
     { name = "llama-index-llms-openai-like", specifier = ">=0.8.0" },
+    { name = "llama-index-node-parser-docling", specifier = ">=0.5.0" },
     { name = "llama-index-readers-docling", specifier = ">=0.5.0" },
+    { name = "llama-index-retrievers-bm25" },
     { name = "llama-index-vector-stores-faiss", specifier = ">=0.7.0" },
     { name = "streamlit", specifier = ">=1.65.0" },
 ]

@@ -1,5 +1,6 @@
 import io
 import json
+import os
 import pathlib as p
 import string
 import subprocess as sp
@@ -17,19 +18,14 @@ LOG = CACHE / "log" / "opencode"
 class OpenCode:
     exe = "opencode"
 
-    def __init__(
-        self, cwd: PathLike = ".", model: Maybe[str] = None, pure: bool = False
-    ) -> None:
+    def __init__(self, cwd: PathLike = ".", model: Maybe[str] = None) -> None:
         self._cwd = p.Path(cwd).resolve()
         self._model = model
-        self._pure = pure
         self._session: Maybe[str] = None
-        self._args = ["--dir", self._cwd, "--format", "json"]
+        self._args = ["--format", "json"]
         if self._model is not None:
             self._args += ["--model", self._model]
-        if self._pure:
-            self._args.append("--pure")
-        self._args.append("--dangerously-skip-permissions")
+        self._args.append("--auto")
 
     @classmethod
     def fromDeepSeek(
@@ -55,10 +51,14 @@ class OpenCode:
         log = LOG / time.strftime("%Y%m%dT%H%M%S")
         log.mkdir(parents=True, exist_ok=True)
         (log / "prompt.md").write_text(prompt)
-        args = [self.exe, "run", prompt] + self._args
+        args = [self.exe, "run", *self._args]
         if self._session is not None:
             args += ["--session", self._session]
-        proc = sp.Popen(args, stdout=sp.PIPE, stderr=sp.PIPE, cwd=self._cwd, text=True)
+        args.append(prompt)
+        env = {**os.environ, "PWD": str(self._cwd)}
+        proc = sp.Popen(
+            args, stdout=sp.PIPE, stderr=sp.PIPE, cwd=self._cwd, env=env, text=True
+        )
         stderr: Strings = []
         if proc.stderr is not None:
             func = lambda: stderr.append(t.cast(io.TextIOWrapper, proc.stderr).read())
@@ -122,7 +122,16 @@ class Result:
 
     @property
     def tokens(self) -> int:
-        return sum(part.get("total", 0) for part in self._usage)
+        ans = 0
+        for part in self._usage:
+            if "total" in part:
+                ans += part["total"]
+            else:
+                cache = part.get("cache") or {}
+                ans += part.get("input", 0) + part.get("output", 0)
+                ans += part.get("reasoning", 0) + cache.get("read", 0)
+                ans += cache.get("write", 0)
+        return ans
 
     def consume(self) -> t.Self:
         if self._stdout is None:
